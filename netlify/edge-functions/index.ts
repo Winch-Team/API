@@ -10,7 +10,12 @@ app.get('/download/:repo/:owner/:version', (c) => {
 
   // https://api.github.com/repos/<user>/<repo>
   // check if valid repo
-
+  const isInIndex = (repo: string): Promise<boolean> => {
+    const url = "https://index.winchteam.dev/anothercalc/";
+    return fetch(url)
+      .then((response: Response) => response.ok);
+  }
+  
   const isValidRepo = (owner: string, repo: string): Promise<boolean> => {
     const url = `https://api.github.com/repos/${owner}/${repo}`;
     return fetch(url)
@@ -23,8 +28,11 @@ app.get('/download/:repo/:owner/:version', (c) => {
       .then((response: Response) => response.ok)
   }
 
-  return Promise.all([isValidRepo(owner, repo), isWinchRepo(owner, repo)])
-    .then(([isValid, isWinch]) => {
+  return Promise.all([isValidRepo(owner, repo), isWinchRepo(owner, repo), isInIndex(repo)])
+    .then(([isValid, isWinch, isInIndex]) => {
+      if (!isInIndex) {
+        return c.json({ message: 'Could not find package in repo' });
+      }
       if (!isValid) {
         return c.json({ message: 'Invalid repo' });
       }
