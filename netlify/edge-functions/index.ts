@@ -11,7 +11,7 @@ app.get('/download/:repo/:owner/:version', (c) => {
   // https://api.github.com/repos/<user>/<repo>
   // check if valid repo
   const isInIndex = (repo: string): Promise<boolean> => {
-    const url = `https://index.winchteam.dev/${repo}/`;
+    const url = `https://index.winchteam.dev/${repo.toLowerCase()}/`;
     return fetch(url)
       .then((response: Response) => response.ok);
   }
