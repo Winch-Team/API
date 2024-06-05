@@ -8,41 +8,28 @@ app.get('/download/:repo/:owner/:version', (c) => {
   const owner = c.req.param('owner')
   const cur_version = c.req.param('version')
 
-  // Check if valid repo
-  const isInIndex = (repo: string): Promise<{ ok: boolean, data: any }> => {
+  // https://api.github.com/repos/<user>/<repo>
+  // check if valid repo
+  const isInIndex = (repo: string): Promise<boolean> => {
     const url = `https://index.winchteam.dev/${repo.toLowerCase()}/`;
     return fetch(url)
-      .then((response: Response) =>
-        response.json().then(data => ({ ok: response.ok, data }))
-      );
+      .then((response: Response) => response.ok);
   }
+  
 
-  const isValidRepo = (owner: string, repo: string): Promise<{ ok: boolean, data: any }> => {
-    const url = `https://api.github.com/repos/${owner}/${repo}`;
-    return fetch(url)
-      .then((response: Response) =>
-        response.json().then(data => ({ ok: response.ok, data }))
-      );
-  };
-
-  const isWinchRepo = (owner: string, repo: string): Promise<{ ok: boolean, data: any }> => {
+  const isWinchRepo = (owner: string, repo: string): Promise<boolean> => {
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/.winch`;
     return fetch(url)
-      .then((response: Response) =>
-        response.json().then(data => ({ ok: response.ok, data }))
-      );
+      .then((response: Response) => response.ok)
   }
 
   return Promise.all([isValidRepo(owner, repo), isWinchRepo(owner, repo), isInIndex(repo)])
     .then(([isValid, isWinch, isInIndex]) => {
-      if (!isInIndex.ok) {
-        return c.json({ message: 'Could not find package in repo', owner: owner, repo: repo, data: isInIndex.data });
+      if (!isInIndex) {
+        return c.json({ message: 'Could not find package in repo', owner: owner, repo: repo });
       }
-      if (!isValid.ok) {
-        return c.json({ message: 'Invalid repo', owner: owner, repo: repo, data: isValid.data });
-      }
-      if (!isWinch.ok) {
-        return c.json({ message: 'Not a Winch repo', owner: owner, repo: repo, data: isWinch.data });
+      if (!isWinch) {
+        return c.json({ message: 'Not a Winch repo', owner: owner, repo: repo });
       }
       return c.json({ 
         message: 'Success!',
