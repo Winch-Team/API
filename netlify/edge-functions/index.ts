@@ -15,12 +15,6 @@ app.get('/download/:repo/:owner/:version', (c) => {
     return fetch(url)
       .then((response: Response) => response.ok);
   }
-  
-  const isValidRepo = (owner: string, repo: string): Promise<boolean> => {
-    const url = `https://api.github.com/repos/${owner}/${repo}`;
-    return fetch(url)
-      .then((response: Response) => response.ok);
-  };
 
   const isWinchRepo = (owner: string, repo: string): Promise<boolean> => {
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/.winch`;
