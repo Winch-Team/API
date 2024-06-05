@@ -31,13 +31,13 @@ app.get('/download/:repo/:owner/:version', (c) => {
   return Promise.all([isValidRepo(owner, repo), isWinchRepo(owner, repo), isInIndex(repo)])
     .then(([isValid, isWinch, isInIndex]) => {
       if (!isInIndex) {
-        return c.json({ message: 'Could not find package in repo' });
+        return c.json({ message: 'Could not find package in repo', owner: owner, repo: repo });
       }
       if (!isValid) {
-        return c.json({ message: 'Invalid repo' });
+        return c.json({ message: 'Invalid repo', owner: owner, repo: repo });
       }
       if (!isWinch) {
-        return c.json({ message: 'Not a Winch repo' });
+        return c.json({ message: 'Not a Winch repo', owner: owner, repo: repo });
       }
       return c.json({ 
         message: 'Success!',
