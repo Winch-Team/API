@@ -72,7 +72,7 @@ app.get('/download/:repo/:owner/:version', async (c) => {
 })
 
 app.get("/getUser/:repo", async (c) => {
-  const repo = c.req.params.repo;
+  const repo = c.req.param('repo');
   const url = `https://index.winchteam.dev/${repo.toLowerCase()}/`;
 
   try {
