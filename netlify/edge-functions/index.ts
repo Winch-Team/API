@@ -73,7 +73,7 @@ app.get('/download/:repo/:owner/:version', async (c) => {
   }
 })
 
-app.get("/getUser/:repo", async (c) => {
+app.get("/getInfo/:repo", async (c) => {
   const repo = c.req.param('repo');
   const url = `https://index.winchteam.dev/${repo.toLowerCase()}/`;
 
@@ -87,8 +87,15 @@ app.get("/getUser/:repo", async (c) => {
   const doc = parser.parseFromString(html, "text/html");
   const authorElement = doc.getElementsByClassName("elem")[0];
   const author = authorElement ? authorElement.innerText.replace("Author :", "").trim() : null;
+  
+  const versions = document.querySelector("#versions")
+  const version_ids = []
+  versions.childNodes.forEach((child) => {
+    if (!child) continue; 
+    versions_ids.push(child.id)
+  });
 
-  return c.json({ author });
+  return c.json({ author, versions: version_ids });
 });
 
 
