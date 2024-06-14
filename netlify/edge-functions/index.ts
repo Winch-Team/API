@@ -90,7 +90,7 @@ app.get("/getUser/:repo", async (c) => {
     return c.json({ author });
   } catch (error) {
     console.error('Error fetching author:', error);
-    return c.json({ error: 'Unable to fetch author' }, 500);
+    return c.json({ message: 'Unable to fetch author', error: error }, 500);
   }
 });
 
