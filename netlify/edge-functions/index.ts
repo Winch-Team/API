@@ -88,7 +88,7 @@ app.get("/getInfo/:repo", async (c) => {
   const authorElement = doc.getElementsByClassName("elem")[0];
   const author = authorElement ? authorElement.innerText.replace("Author :", "").trim() : null;
   
-  const versions = document.querySelector("#versions")
+  const versions = doc.querySelector("#versions")
   const version_ids = []
   versions.childNodes.forEach((child) => {
     if (child) { 
