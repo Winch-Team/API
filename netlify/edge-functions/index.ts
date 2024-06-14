@@ -96,7 +96,7 @@ app.get("/getInfo/:repo", async (c) => {
     }
   });
 
-  return c.json({ author, versions: version_ids });
+  return c.json({ author, versions: version_ids.filter((item) => item !== null) });
 });
 
 
