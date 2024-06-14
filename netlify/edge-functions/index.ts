@@ -71,4 +71,28 @@ app.get('/download/:repo/:owner/:version', async (c) => {
   }
 })
 
+app.get("/getUser/:repo/", async (c) => {
+  const repo = c.req.params.repo;
+  const url = `https://index.winchteam.dev/${repo.toLowerCase()}/`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const html = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const authorElement = doc.getElementsByClassName("elem")[0];
+    const author = authorElement ? authorElement.innerText.replace("Author :", "").trim() : null;
+
+    return c.json({ author });
+  } catch (error) {
+    console.error('Error fetching author:', error);
+    return c.json({ error: 'Unable to fetch author' }, 500);
+  }
+});
+
+
 export default handle(app)
