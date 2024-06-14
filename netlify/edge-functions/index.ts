@@ -91,8 +91,9 @@ app.get("/getInfo/:repo", async (c) => {
   const versions = document.querySelector("#versions")
   const version_ids = []
   versions.childNodes.forEach((child) => {
-    if (!child) continue; 
-    versions_ids.push(child.id)
+    if (child) { 
+      versions_ids.push(child.id)
+    }
   });
 
   return c.json({ author, versions: version_ids });
