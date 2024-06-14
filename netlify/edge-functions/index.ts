@@ -92,7 +92,7 @@ app.get("/getInfo/:repo", async (c) => {
   const version_ids = []
   versions.childNodes.forEach((child) => {
     if (child) { 
-      versions_ids.push(child.id)
+      version_ids.push(child.id)
     }
   });
 
