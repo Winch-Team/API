@@ -1,5 +1,7 @@
 import { Hono } from 'https://deno.land/x/hono/mod.ts'
 import { handle } from 'https://deno.land/x/hono/adapter/netlify/mod.ts'
+import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
+
 
 const app = new Hono()
 
