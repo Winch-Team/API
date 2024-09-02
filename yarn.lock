@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-hono@^4.4.4:
-  version "4.4.4"
-  resolved "https://registry.yarnpkg.com/hono/-/hono-4.4.4.tgz#60eda24bd63dfb379735b9d924016c3c7b1bb329"
-  integrity sha512-zO5+4K8yf1iuKhBZhwmpZ/0LzPMr8Zt1RugEGM1xvOqgh9DyLb7tslOtoBks4bmm5bIcLtzLCXUpYpXOkwpABA==
+hono@^4.5.10:
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/hono/-/hono-4.5.10.tgz#6ee874b54faffedaaa94a658c96e2cd4968ccea6"
+  integrity sha512-az6tdU1U8o/l0v8O37FIQuc+ER/TeD9vHt/qs8JnBDgMxw6Zu5L2AixUyHeXZNcu87r7iYo8Ey85R7IogOINKA==
